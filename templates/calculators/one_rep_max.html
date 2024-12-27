@@ -6,11 +6,11 @@
 <div class="content pt-5">
     <section class="py-5">
         <div class="container">
-            <div class="text-center mb-4">
+            <div class="text-center mb-4 fade-in">
                 <h1>One-Rep Max Calculator</h1>
                 <p>Calculate your one-rep max weight using the form below:</p>
             </div>
-            <form method="post">
+            <form method="post" class="fade-in">
                 {% csrf_token %}
                 <div class="mb-3">
                     {{ form.exercise.label_tag }}
@@ -30,19 +30,20 @@
                 {% endif %}
             </form>
             {% if result %}
-            <div class="alert alert-success mt-4">
+            <div class="alert alert-success mt-4 fade-in">
                 Your One-Rep Max is: {{ result|floatformat:2 }} kg
             </div>
             {% endif %}
             {% if logs %}
-            <div class="mt-5">
+            <div class="mt-5 fade-in">
                 <h3>Your Logs</h3>
-                <table class="table table-striped mt-3">
+                <table class="table table-striped mt-3 fade-in">
                     <thead>
                         <tr>
                             <th>Date</th>
                             <th>Exercise</th>
                             <th>Result (kg)</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,5 +68,4 @@
         </div>
     </section>
 </div>
-
 {% endblock %}
