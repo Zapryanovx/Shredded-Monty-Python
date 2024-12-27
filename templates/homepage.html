@@ -50,11 +50,13 @@
 <!-- Call to Action Section -->
 <section id="register" class="py-5">
     <div class="container text-center fade-in">
-        <h2>Join the Community</h2>
-        <p class="lead">Take the first step toward achieving your fitness goals today.</p>
         {% if user.is_authenticated %}
+        <h2>Be a better version of yourself</h2>
+        <p class="lead">See your progress in achieving your fitness goals.</p>
         <a href="nav-link" class="btn btn-primary btn-lg mt-3 scale-up">Go to Profile</a>
         {% else %}
+        <h2>Join the Community</h2>
+        <p class="lead">Take the first step toward achieving your fitness goals today.</p>
         <a href="{% url 'register' %}" class="btn btn-primary btn-lg mt-3 scale-up">Sign Up Now</a>
         {% endif %}
     </div>
