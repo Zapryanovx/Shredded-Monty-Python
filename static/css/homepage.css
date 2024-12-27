@@ -65,3 +65,27 @@
 #about .about-image:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
+
+#pros h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #212529;
+    margin-bottom: 40px; /* Дава повече пространство под заглавието */
+    text-align: center;
+}
+
+#pros h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #212529;
+    text-align: center;
+}
+
+#pros p {
+    color: #495057;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center;
+}
