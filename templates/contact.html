@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Us - Shredded Monty Python{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/contact.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<!-- Contact Section -->
+<div class="content">
+    <section class="py-5 fade-in">
+        <div class="container fade-in">
+            <div class="text-center mb-5 fade-in">
+                <h2>Contact Us</h2>
+                <p class="lead">We'd love to hear from you. Feel free to reach out with any questions or feedback!</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 fade-in">
+                    <div class="contact-info">
+                        <h3>Get in Touch</h3>
+                        <p>If you have any questions, feel free to contact us using the form or the information below:</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Email:</strong> support@shreddedmontypython.com</li>
+                            <li><strong>Phone:</strong> +1 234 567 890</li>
+                            <li><strong>Address:</strong> 123 Fitness Street, Healthy City</li>
+                        </ul>
+                        <h4>Follow Us</h4>
+                        <div class="social-icons">
+                            <a href="https://www.facebook.com/profile.php?id=100095463939933"><img src="{% static 'media/facebook.png' %}" alt="Facebook"></a>
+                            <a href="https://www.instagram.com/zapryanov.ilian/"><img src="{% static 'media/instagram.png' %}" alt="Instagram"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
