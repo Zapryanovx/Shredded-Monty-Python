@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}One-Rep Max Calculator{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/calculators_format.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
 <div class="content pt-5">
@@ -10,30 +15,34 @@
                 <h1>One-Rep Max Calculator</h1>
                 <p>Calculate your one-rep max weight using the form below:</p>
             </div>
-            <form method="post" class="fade-in">
-                {% csrf_token %}
-                <div class="mb-3">
-                    {{ form.exercise.label_tag }}
-                    {{ form.exercise }}
+            <div class="row">
+                <div class="col-md-6 fade-in">
+                    <form method="post" class="fade-in">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ form.exercise.label_tag }}
+                            {{ form.exercise }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.weight.label_tag }}
+                            {{ form.weight }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.repetitions.label_tag }}
+                            {{ form.repetitions }}
+                        </div>
+                        <button type="submit" name="calculate" class="btn btn-primary">Calculate</button>
+                        {% if result %}
+                        <button type="submit" name="add_log" class="btn btn-success">Add Log</button>
+                        {% endif %}
+                    </form>
+                    {% if result %}
+                    <div class="alert alert-success mt-4 fade-in">
+                        Your One-Rep Max is: {{ result|floatformat:2 }} kg
+                    </div>
+                    {% endif %}
                 </div>
-                <div class="mb-3">
-                    {{ form.weight.label_tag }}
-                    {{ form.weight }}
-                </div>
-                <div class="mb-3">
-                    {{ form.repetitions.label_tag }}
-                    {{ form.repetitions }}
-                </div>
-                <button type="submit" name="calculate" class="btn btn-primary">Calculate</button>
-                {% if result %}
-                <button type="submit" name="add_log" class="btn btn-success">Add Log</button>
-                {% endif %}
-            </form>
-            {% if result %}
-            <div class="alert alert-success mt-4 fade-in">
-                Your One-Rep Max is: {{ result|floatformat:2 }} kg
             </div>
-            {% endif %}
             {% if logs %}
             <div class="mt-5 fade-in">
                 <h3>Your Logs</h3>
