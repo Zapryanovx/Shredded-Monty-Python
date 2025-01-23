@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Welcome to Shredded Monty Python{% endblock %}
+
+{% block content %}
+
+{% block extra_css %}
+<link href="{% static 'css/homepage.css' %}" rel="stylesheet">
+{% endblock %}
+    
+<!-- Intro Section -->
+<header class="hero text-center py-5">
+    <div class="container fade-in">
+        <img src="{% static 'media/logo_white.png' %}" alt="Shredded Monty Python Logo">
+        <h1 class="display-4">Shredded Monty Python</h1>
+        <p class="lead mt-3">Achieve your fitness goals with ease! Track workouts, monitor progress, and connect with a supportive community.</p>
+        <a href="#about" class="btn btn-primary btn-lg mt-3 scale-up">Learn More</a>
+        {% if user.is_authenticated %}
+        <a href="nav-link" class="btn btn-outline-light btn-lg mt-3 scale-up">Profile</a>
+        {% else %}
+        <a href="{% url 'register' %}" class="btn btn-outline-light btn-lg mt-3 scale-up">Get Started</a>
+        {% endif %}
+    </div>
+</header>
+
+<!-- Features Section -->
+<section id="features" class="py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4 fade-in">
+                <img src="{% static 'media/profile.jpg' %}" class="feature-image" alt="Profile Tracking">
+                <h3>Profile Tracking</h3>
+                <p>Log your workouts, track your weight, and watch your progress over time.</p>
+            </div>
+            <div class="col-md-4 mb-4 fade-in">
+                <img src="{% static 'media/feed.png' %}" class="feature-image" alt="Community Support">
+                <h3>Community Feed</h3>
+                <p>Share your fitness journey and gain motivation from others.</p>
+            </div>
+            <div class="col-md-4 mb-4 fade-in">
+                <img src="{% static 'media/progress.png' %}" class="feature-image" alt="Visualization">
+                <h3>Progress Visualization</h3>
+                <p>See your progress through detailed charts and graphs.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section id="register" class="py-5">
+    <div class="container text-center fade-in">
+        {% if user.is_authenticated %}
+        <h2>Be a better version of yourself</h2>
+        <p class="lead">See your progress in achieving your fitness goals.</p>
+        <a href="nav-link" class="btn btn-primary btn-lg mt-3 scale-up">Go to Profile</a>
+        {% else %}
+        <h2>Join the Community</h2>
+        <p class="lead">Take the first step toward achieving your fitness goals today.</p>
+        <a href="{% url 'register' %}" class="btn btn-primary btn-lg mt-3 scale-up">Sign Up Now</a>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Platform Description Section -->
+<section id="about" class="py-5">
+    <div class="container">
+        <img src="/static/media/about_us.jpg" alt="About Shredded Monty Python" class="about-image mb-4">
+        <h2 class="text-center mb-4">About Shredded Monty Python</h2>
+        <p class="text-center">
+            Shredded Monty Python is a groundbreaking fitness platform created to empower individuals in achieving their 
+            health and wellness goals while building a strong, supportive community. Whether you’re looking to lose weight,
+            gain muscle, improve endurance, or simply maintain a healthier lifestyle, this platform provides the tools and
+            inspiration to make it happen. With a sleek, user-friendly interface, Shredded Monty Python makes fitness tracking effortless. 
+            Users can log their workouts, monitor progress with insightful visualizations, and design personalized fitness 
+            routines tailored to their unique aspirations. The platform also offers advanced tools like calorie calculators, 
+            BMI assessments, one-rep max estimators, and body fat percentage calculators—delivering precise data to guide your 
+            fitness journey.
+        </p>
+        <p class="text-center">
+            What truly sets Shredded Monty Python apart is its For You community space. Here, users can connect, share motivational
+            stories, exchange tips, and celebrate milestones together. This feature fosters an engaging, collaborative environment 
+            that ensures every user stays inspired and supported. Additionally, the platform offers an extensive exercise library, categorized by muscle group, difficulty level, 
+            and equipment type. Every exercise includes instructional YouTube links to ensure users perform movements correctly 
+            and effectively.
+        </p>
+        <p class="text-center">
+            For those seeking local fitness opportunities, Shredded Monty Python integrates a map of nearby gyms with user reviews 
+            and ratings, helping you make informed decisions about where to train.
+            Packed with features like personalized reports, progress graphs, motivational push notifications, 
+            and seamless design, Shredded Monty Python is more than just an app—it’s your dedicated fitness partner. 
+            Join the revolution and take your fitness to the next level, one goal at a time.
+        </p>
+    </div>
+</section>
+
+<!-- Outro Section -->
+<section id="pros" class="py-5">
+    <div class="container text-center">
+        <h2 class="mb-5 fade-in">Why Shredded Monty Python?</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4 fade-in">
+                <h3>Exercise Variety</h3>
+                <p>Access a wide range of exercises with detailed guides for proper form and execution.</p>
+            </div>
+            <div class="col-md-4 mb-4 fade-in">
+                <h3>Goal Tracking</h3>
+                <p>Set and achieve your fitness goals with personalized plans and regular updates.</p>
+            </div>
+            <div class="col-md-4 mb-4 fade-in">
+                <h3>Community Support</h3>
+                <p>Connect with a supportive community to stay motivated and inspired.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

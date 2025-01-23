@@ -1,0 +1,91 @@
+#features {
+    padding: 50px 0;
+    background-color: #ffffff;
+}
+
+#features .feature-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#features .feature-image:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+#features h3 {
+    font-size: 1.25rem;
+    margin-top: 10px;
+    color: #212529;
+    font-weight: bold;
+}
+
+#features p {
+    color: #495057;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+#about {
+    background-color: #f1f1f1; 
+    color: #212529;
+    padding: 100px 0; 
+    border-top: 2px solid #e9ecef; 
+    border-bottom: 2px solid #e9ecef; 
+}   
+
+#about h2 {
+    color: #000;
+    font-weight: bold; 
+    margin-bottom: 20px; 
+}
+#about p {
+    line-height: 1.8;
+    font-size: 1.1rem;
+    color: #495057; 
+}
+
+#about .about-image {
+    width: 1280px;
+    height: 400px;
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    
+}
+
+#about .about-image:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#pros h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #212529;
+    margin-bottom: 40px; /* Дава повече пространство под заглавието */
+    text-align: center;
+}
+
+#pros h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #212529;
+    text-align: center;
+}
+
+#pros p {
+    color: #495057;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center;
+}
