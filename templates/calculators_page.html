@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Calculators - Shredded Monty Python{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/calculators.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <section class="py-5">
+        <div class="container text-center">
+            <h2 class="fade-in">Fitness Calculators</h2>
+            <p class="lead fade-in">Explore our calculators to help you optimize your fitness journey.</p>
+            <div class="row mt-5 d-flex justify-content-center">
+                <div class="col-md-6 col-lg-4 mb-4 fade-in">
+                    <a href="{% url 'one_rep_max' %}">
+                        <div class="calculator-card">
+                            <img src="{% static 'media/one_rep_max.jpg' %}" alt="One-Rep Max Calculator">
+                            <h3>One-Rep Max Calculator</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 fade-in">
+                    <a href="{% url 'bmi' %}">
+                        <div class="calculator-card">
+                            <img src="{% static 'media/bmi_calculator.jpg' %}" alt="BMI Calculator">
+                            <h3>BMI Calculator</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 fade-in">
+                    <a href="{% url 'calorie' %}">
+                        <div class="calculator-card">
+                            <img src="{% static 'media/calorie_calculator.jpg' %}" alt="Calorie Calculator">
+                            <h3>Calorie Calculator</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4 fade-in">
+                    <a href="{% url 'body_fat' %}">
+                        <div class="calculator-card">
+                            <img src="{% static 'media/body_fat_percentage.jpg' %}" alt="Body Fat Calculator">
+                            <h3>Body Fat Calculator</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
