@@ -193,7 +193,7 @@ def body_fat_view(request):
 def remove_log(request, log_type):
     if request.method == 'POST':
         log_id = request.POST.get('log_id')    
-        model = apps.get_model('main', log_type)
+        model = apps.get_model('calculators', log_type)
         log = model.objects.filter(id=log_id, user=request.user).first()
     
         if log:
