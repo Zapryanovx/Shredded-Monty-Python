@@ -28,16 +28,43 @@ body {
 }
 
 .navbar-nav .nav-link {
-    color: #ffffff;
     transition: all 0.3s ease;
 }
 
 .navbar-nav .nav-link:hover {
-    color: #ffffff;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
     text-decoration: none;
 }
 
 .content {
     margin-top: 70px;
+}
+
+.dropdown-menu-dark {
+    background-color: #333333;
+    border: 1px solid #444444;
+}
+
+.dropdown-menu-dark .dropdown-item {
+    color: #ffffff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-menu-dark .dropdown-item:hover {
+    background-color: #555555;
+    color: #ffffff;
+}
+
+.dropdown-divider {
+    border-color: #555555;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    position: relative;
+    top: -2px;
 }
