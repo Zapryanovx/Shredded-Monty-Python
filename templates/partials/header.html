@@ -1,4 +1,5 @@
 {% load static %}
+
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="{% url 'homepage' %}">
@@ -13,29 +14,39 @@
                     <a class="nav-link" href="{% url 'homepage' %}">Home</a>
                 </li>
                 {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="nav-link">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="nav-link">Workouts</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'calculators' %}">Calculators</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    </li>
-                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="nav-link">Social</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="nav-link">Workouts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'calculators' %}">Calculators</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'contact' %}">Contact</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle profile-pic" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class ="profile-pic" src="{% static 'media/default_avatar.png' %}" width="50" height="50" alt="Profile" >
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="#">View Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Progress</a></li>
+                        <li><a class="dropdown-item" href="#">Workout log</a></li>
+                        <li><a class="dropdown-item" href="{% url 'calculators' %}">Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                {% endif %}   
             </ul>
         </div>
     </div>
