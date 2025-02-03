@@ -34,7 +34,7 @@
         <h2>All Exercises</h2>
 
         <form method="GET" class="mb-4">
-            <div class="row">
+            <div class="filters-container">
                 <div class="col-md-4">
                     <input type="text" name="search" class="form-control" placeholder="Search by keyword..." value="{{ request.GET.search }}">
                 </div>
@@ -56,6 +56,13 @@
                         <option value="beginner" {% if request.GET.difficulty == "beginner" %}selected{% endif %}>Beginner</option>
                         <option value="intermediate" {% if request.GET.difficulty == "intermediate" %}selected{% endif %}>Intermediate</option>
                         <option value="advanced" {% if request.GET.difficulty == "advanced" %}selected{% endif %}>Advanced</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="sort" class="form-control">
+                        <option value="">Sort by</option>
+                        <option value="name_asc" {% if request.GET.sort == "name_asc" %}selected{% endif %}>Name (A-Z)</option>
+                        <option value="name_desc" {% if request.GET.sort == "name_desc" %}selected{% endif %}>Name (Z-A)</option>
                     </select>
                 </div>
                 <div class="col-md-2">
