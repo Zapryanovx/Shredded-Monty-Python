@@ -23,6 +23,12 @@ def workouts(request):
     difficulty = request.GET.get('difficulty', '')
     if difficulty:
         exercises = exercises.filter(difficulty__iexact=difficulty)
+        
+    sort_order = request.GET.get('sort', '')
+    if sort_order == 'name_asc':
+        exercises = exercises.order_by('name')
+    elif sort_order == 'name_desc':
+        exercises = exercises.order_by('-name')
 
     for exercise in exercises:
         exercise.user_has_rated = exercise.ratings.filter(user=request.user).exists() if request.user.is_authenticated else False
