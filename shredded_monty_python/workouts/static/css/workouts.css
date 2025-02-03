@@ -1,0 +1,225 @@
+body {
+    background-color: #f8f9fa;
+    color: #212529;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: #0d6efd;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+h2 {
+    text-align: center;
+    color: #212529;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.session-viewer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 1200px;
+    height: 400px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.session-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.session {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    color: white;
+    text-align: center;
+    background-image: url('/static/media/cover.jpg');
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.session h3 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
+    margin-bottom: 15px;
+}
+
+.session p {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #f1f1f1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+}
+
+.session ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.session ul li {
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.session {
+    padding: 30px;
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: overlay;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+#prev-btn {
+    left: 15px;
+}
+
+#next-btn {
+    right: 15px;
+}
+
+.exercise-list {
+    margin: 20px auto;
+    width: 80%;
+    max-width: 900px;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ced4da;
+}
+
+.exercise-item {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dee2e6;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.exercise-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.exercise-item h4 {
+    margin: 0 0 10px;
+    color: #0d6efd;
+    font-weight: bold;
+}
+
+.exercise-item p {
+    margin: 5px 0;
+    color: #495057;
+}
+
+.stars {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.star {
+    font-size: 24px;
+    color: #e4e5e9;
+    margin-right: 4px;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.star:hover {
+    color: #ffc107;
+    transform: scale(1.1);
+}
+
+.star.filled {
+    color: #ffc107;
+}
+
+.list-group-item {
+    margin-bottom: 25px;
+    padding: 25px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.list-group-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.exercise-actions {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.action-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.action-icon:hover {
+    transform: scale(1.2);
+}

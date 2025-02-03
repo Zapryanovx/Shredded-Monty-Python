@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/workouts.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="container" style="padding-top: 50px;">
+        {% if user.is_superuser %}
+            <a href="{% url 'add_exercise' %}" class="btn btn-primary mb-3">Add Exercise</a>
+            <a href="{% url 'add_session' %}" class="btn btn-primary mb-3">Add Session</a>
+        {% endif %}
+        
+        <div class="session-viewer">
+            <button id="prev-btn" class="nav-btn">❮</button>
+            <div class="session-container">
+                {% for session in sessions %}
+                <div class="session" data-session-index="{{ forloop.counter0 }}" {% if not forloop.first %} style="display: none;"{% endif %}>
+                    <h3>{{ session.name }}</h3>
+                    <p>{{ session.description }}</p>
+                    <ul>
+                        {% for exercise in session.exercises.all %}
+                        <li>{{ exercise.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+            <button id="next-btn" class="nav-btn">❯</button>
+        </div>
+
+        <h2>All Exercises</h2>
+
+        <form method="GET" class="mb-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" name="search" class="form-control" placeholder="Search by keyword..." value="{{ request.GET.search }}">
+                </div>
+                <div class="col-md-3">
+                    <select name="muscle_group" class="form-control">
+                        <option value="">All Muscle Groups</option>
+                        <option value="chest" {% if request.GET.muscle_group == "chest" %}selected{% endif %}>Chest</option>
+                        <option value="back" {% if request.GET.muscle_group == "back" %}selected{% endif %}>Back</option>
+                        <option value="legs" {% if request.GET.muscle_group == "legs" %}selected{% endif %}>Legs</option>
+                        <option value="arms" {% if request.GET.muscle_group == "arms" %}selected{% endif %}>Arms</option>
+                        <option value="shoulders" {% if request.GET.muscle_group == "shoulders" %}selected{% endif %}>Shoulders</option>
+                        <option value="core" {% if request.GET.muscle_group == "core" %}selected{% endif %}>Core</option>
+                        <option value="cardio" {% if request.GET.muscle_group == "cardio" %}selected{% endif %}>Cardio</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="difficulty" class="form-control">
+                        <option value="">All Difficulties</option>
+                        <option value="beginner" {% if request.GET.difficulty == "beginner" %}selected{% endif %}>Beginner</option>
+                        <option value="intermediate" {% if request.GET.difficulty == "intermediate" %}selected{% endif %}>Intermediate</option>
+                        <option value="advanced" {% if request.GET.difficulty == "advanced" %}selected{% endif %}>Advanced</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <ul class="list-group">
+        {% for exercise in exercises %}
+        <li class="list-group-item mb-4" style="background-image: url('{{ exercise.image.url }}'); background-size: cover; background-position: center; padding: 20px; border-radius: 10px;">
+            <h4>{{ exercise.name }}</h4>
+            <p>Muscle Group: {{ exercise.get_muscle_group_display }}</p>
+            <p>Difficulty: {{ exercise.get_difficulty_display }}</p>
+            <p>Optimal Sets and Reps: {{ exercise.optimal_sets_reps }}</p>
+            <p><a href="{{ exercise.video_url }}" target="_blank">Watch video</a></p>
+            {% if not exercise.user_has_rated %}
+                <p>Rate this exercise:</p>
+                <div>
+                    {% for i in "12345" %}
+                    <a href="{% url 'rate_exercise' exercise.id i %}" class="btn btn-link">
+                        <i class="bi bi-star text-secondary"></i>
+                    </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>
+                    Rating: 
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= exercise.rating|floatformat:"0"|add:0 %}
+                            <i class="bi bi-star-fill text-warning"></i>
+                        {% else %}
+                            <i class="bi bi-star text-secondary"></i>
+                        {% endif %}
+                    {% endfor %}
+                </p>
+            {% endif %}
+            {% if user.is_superuser %}
+            <div class="exercise-actions">
+                <a href="{% url 'edit_exercise' exercise.id %}" class="btn btn-link">
+                    <img src="{% static 'media/edit-icon.png' %}" alt="Edit" class="action-icon">
+                </a>
+                <a href="{% url 'delete_exercise' exercise.id %}" class="btn btn-link" onclick="return confirm('Are you sure you want to delete this exercise?');">
+                    <img src="{% static 'media/delete-icon.png' %}" alt="Delete" class="action-icon">
+                </a>
+            </div>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let currentIndex = 0;
+        const sessions = document.querySelectorAll(".session");
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+
+        function showSession(index) {
+            sessions.forEach((session, i) => {
+                session.style.display = i === index ? "block" : "none";
+            });
+        }
+
+        prevBtn.addEventListener("click", function () {
+            currentIndex = (currentIndex - 1 + sessions.length) % sessions.length;
+            showSession(currentIndex);
+        });
+
+        nextBtn.addEventListener("click", function () {
+            currentIndex = (currentIndex + 1) % sessions.length;
+            showSession(currentIndex);
+        });
+    });
+</script>
+{% endblock %} 
