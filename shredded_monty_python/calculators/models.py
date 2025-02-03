@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class OneRepMaxLog(models.Model):
     EXERCISE_CHOICES = [
         ('bench_press', 'Bench Press'),

@@ -1,5 +1,6 @@
 from django import forms
 
+
 class OneRepMaxForm(forms.Form):
     weight = forms.FloatField(
         label="Weight (kg)", 
