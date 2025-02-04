@@ -1,21 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
 
+<!-- Page Title -->
 {% block title %}Body Fat Calculator{% endblock %}
 
+<!-- Additional Styles -->
 {% block extra_css %}
 <link href="{% static 'css/calculators_format.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
+
 <div class="content pt-5">
     <section class="py-5">
         <div class="container">
+            <!-- Description of the Body Fat Calculator -->
             <div class="text-center mb-4 fade-in">
                 <h1>Body Fat Calculator</h1>
                 <p>Calculate your body fat percentage using the form below:</p>
             </div>
             <div class="row">
+                <!-- Form for user input -->
                 <div class="col-md-6 fade-in">
                     <form method="post" class="fade-in">
                         {% csrf_token %}
@@ -42,11 +47,15 @@
                     </form>
                 </div>
             </div>
+
+            <!-- Display calculated body fat percentage -->
             {% if result %}
             <div class="alert alert-success mt-4 fade-in">
                 Your Body Fat Percentage is: {{ result|floatformat:2 }}%
             </div>
             {% endif %}
+            
+            <!-- Display logs table if logs are available -->
             {% if logs %}
             <div class="mt-5 fade-in">
                 <h3>Your Logs</h3>
@@ -87,4 +96,5 @@
         </div>
     </section>
 </div>
+
 {% endblock %}

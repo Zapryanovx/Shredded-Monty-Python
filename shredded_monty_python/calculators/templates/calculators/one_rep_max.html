@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+<!-- Page Title -->
+{% block title %}Calorie Calculator{% endblock %}
+
+<!-- Additional Styles -->
 {% block extra_css %}
 <link href="{% static 'css/calculators_format.css' %}" rel="stylesheet">
 {% endblock %}
@@ -8,14 +12,17 @@
 {% block title %}One-Rep Max Calculator{% endblock %}
 
 {% block content %}
+
 <div class="content pt-5">
     <section class="py-5">
         <div class="container">
+            <!-- Description of the One-Rep Max Calculator -->
             <div class="text-center mb-4 fade-in">
                 <h1>One-Rep Max Calculator</h1>
                 <p>Calculate your one-rep max weight using the form below:</p>
             </div>
             <div class="row">
+                <!-- Form for user input -->
                 <div class="col-md-6 fade-in">
                     <form method="post" class="fade-in">
                         {% csrf_token %}
@@ -36,13 +43,18 @@
                         <button type="submit" name="add_log" class="btn btn-success">Add Log</button>
                         {% endif %}
                     </form>
+
+                    <!-- Display calculated result -->
                     {% if result %}
                     <div class="alert alert-success mt-4 fade-in">
                         Your One-Rep Max is: {{ result|floatformat:2 }} kg
                     </div>
                     {% endif %}
+                
                 </div>
             </div>
+
+            <!-- Display logs if available -->
             {% if logs %}
             <div class="mt-5 fade-in">
                 <h3>Your Logs</h3>
@@ -77,4 +89,5 @@
         </div>
     </section>
 </div>
+
 {% endblock %}

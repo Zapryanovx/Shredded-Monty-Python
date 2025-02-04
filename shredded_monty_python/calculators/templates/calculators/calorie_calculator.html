@@ -1,21 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
 
+<!-- Page Title -->
 {% block title %}Calorie Calculator{% endblock %}
 
+<!-- Additional Styles -->
 {% block extra_css %}
 <link href="{% static 'css/calculators_format.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
+
 <div class="content pt-5">
     <section class="py-5">
         <div class="container">
+            <!-- Description of the Calorie Calculator -->
             <div class="text-center mb-4 fade-in">
                 <h1>Calorie Calculator</h1>
                 <p>Calculate your daily calorie needs based on your activity level:</p>
             </div>
             <div class="row">
+                <!-- Form for user input -->
                 <div class="col-md-6 fade-in">
                     <form method="post">
                         {% csrf_token %}
@@ -44,13 +49,18 @@
                         <button type="submit" name="add_log" class="btn btn-success">Add Log</button>
                         {% endif %}
                     </form>
+
+                    <!-- Display calculated result -->
                     {% if result %}
                     <div class="alert alert-success mt-4">
                         Your daily calorie need is: {{ result|floatformat:2 }} kcal
                     </div>
                     {% endif %}
+
                 </div>
             </div>
+
+            <!-- Display logs if available -->
             {% if logs %}
             <div class="mt-5 fade-in">
                 <h3>Your Logs</h3>
@@ -93,4 +103,5 @@
         </div>
     </section>
 </div>
+
 {% endblock %}
