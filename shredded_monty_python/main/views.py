@@ -7,9 +7,11 @@ def homepage_view(request):
     """Render the homepage."""
     return render(request, 'homepage.html')
 
+
 def contact_view(request):
     """Render the contact page. """
     return render(request, 'contact.html')
+
 
 def register_view(request):
     """
@@ -30,6 +32,7 @@ def register_view(request):
         form = RegisterForm()
     
     return render(request, 'register.html', {'form': form})
+
 
 def login_view(request):
     """
