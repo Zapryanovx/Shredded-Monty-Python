@@ -1,17 +1,20 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.decorators import login_required   
-from .forms import OneRepMaxForm, BMIForm, CalorieForm, BodyFatForm
-from .models import OneRepMaxLog, BMILog, CalorieLog, BodyFatLog
+from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
 from django.apps import apps
+from .forms import OneRepMaxForm, BMIForm, CalorieForm, BodyFatForm
+from .models import OneRepMaxLog, BMILog, CalorieLog, BodyFatLog
+
 
 @login_required
 def calculators_view(request):
+    """Display the main page for fitness calculators."""
     return render(request, 'calculators_page.html')
+
 
 @login_required
 def one_rep_max_view(request):
+    """Calculate and log the One-Rep Max."""
     result = None
     logs = OneRepMaxLog.objects.filter(user=request.user).order_by('-date')
     if request.method == 'POST':
@@ -20,10 +23,10 @@ def one_rep_max_view(request):
             weight = form.cleaned_data['weight']
             repetitions = form.cleaned_data['repetitions']
             exercise = form.cleaned_data['exercise']
-            
-            # Epley formula
+
+            # Calculate One-Rep Max using the Epley formula
             result = weight * (1 + repetitions / 30)
-            
+
             if 'add_log' in request.POST:
                 OneRepMaxLog.objects.create(
                     user=request.user,
@@ -38,11 +41,13 @@ def one_rep_max_view(request):
     return render(request, 'calculators/one_rep_max.html', {
         'form': form,
         'result': result,
-        'logs': logs
+        'logs': logs,
     })
-    
+
+
 @login_required
 def bmi_view(request):
+    """Calculate and log the BMI."""
     result = None
     category = None
     logs = BMILog.objects.filter(user=request.user).order_by('-date')
@@ -50,15 +55,11 @@ def bmi_view(request):
     if request.method == 'POST':
         form = BMIForm(request.POST)
         if form.is_valid():
-            height = form.cleaned_data['height'] / 100 
+            height = form.cleaned_data['height'] / 100  # Convert cm to meters
             weight = form.cleaned_data['weight']
-            
-            if height == 0:
-                height = 1
-                
-            #BMI Fornula
-            result = weight / (height ** 2)
+            result = weight / (height ** 2) if height > 0 else 0
 
+            # Determine BMI category
             if result < 18.5:
                 category = "Underweight"
             elif 18.5 <= result < 24.9:
@@ -67,7 +68,7 @@ def bmi_view(request):
                 category = "Overweight"
             else:
                 category = "Obesity"
-                
+
             if 'add_log' in request.POST:
                 BMILog.objects.create(
                     user=request.user,
@@ -77,14 +78,6 @@ def bmi_view(request):
                     date=now()
                 )
                 return redirect('bmi')
-
-        elif 'remove_log' in request.POST:
-            log_id = request.POST.get('log_id')
-            log = BMILog.objects.filter(id=log_id, user=request.user).first()
-            if log:
-                log.delete()
-            return redirect('bmi')
-
     else:
         form = BMIForm()
 
@@ -92,11 +85,13 @@ def bmi_view(request):
         'form': form,
         'result': result,
         'category': category,
-        'logs': logs
+        'logs': logs,
     })
+
 
 @login_required
 def calorie_view(request):
+    """Calculate and log daily calorie needs."""
     result = None
     logs = CalorieLog.objects.filter(user=request.user).order_by('-date')
     if request.method == 'POST':
@@ -108,11 +103,10 @@ def calorie_view(request):
             weight = form.cleaned_data['weight']
             activity_level = form.cleaned_data['activity_level']
 
-            # Mifflin-St Jeor Equation
-            if gender == 'male':
-                bmr = 10 * weight + 6.25 * height - 5 * age + 5
-            else:
-                bmr = 10 * weight + 6.25 * height - 5 * age - 161
+            # Calculate BMR using Mifflin-St Jeor Equation
+            bmr = (
+                10 * weight + 6.25 * height - 5 * age + (5 if gender == 'male' else -161)
+            )
 
             # Adjust BMR based on activity level
             activity_multipliers = {
@@ -122,8 +116,7 @@ def calorie_view(request):
                 'active': 1.725,
                 'very_active': 1.9,
             }
-            
-            result = bmr * activity_multipliers[activity_level]
+            result = bmr * activity_multipliers.get(activity_level, 1)
 
             if 'add_log' in request.POST:
                 CalorieLog.objects.create(
@@ -146,8 +139,10 @@ def calorie_view(request):
         'logs': logs,
     })
 
+
 @login_required
 def body_fat_view(request):
+    """Calculate and log the body fat percentage."""
     result = None
     logs = BodyFatLog.objects.filter(user=request.user).order_by('-date')
 
@@ -156,20 +151,18 @@ def body_fat_view(request):
         if form.is_valid():
             gender = form.cleaned_data['gender']
             age = form.cleaned_data['age']
-            height = form.cleaned_data['height'] / 100  # cm
+            height = form.cleaned_data['height'] / 100  # Convert cm to meters
             weight = form.cleaned_data['weight']
 
-            if height == 0:
-                height = 1
-                
-            bmi = weight / (height ** 2)
+            bmi = weight / (height ** 2) if height > 0 else 0
 
+            # Calculate body fat percentage
             if gender == 'male':
                 result = 1.20 * bmi + 0.23 * age - 16.2
             elif gender == 'female':
                 result = 1.20 * bmi + 0.23 * age - 5.4
 
-            if result is not None and 'add_log' in request.POST:
+            if 'add_log' in request.POST:
                 BodyFatLog.objects.create(
                     user=request.user,
                     gender=gender,
@@ -186,26 +179,18 @@ def body_fat_view(request):
     return render(request, 'calculators/body_fat.html', {
         'form': form,
         'result': result,
-        'logs': logs
+        'logs': logs,
     })
-    
+
+
 @login_required
 def remove_log(request, log_type):
+    """Remove a log entry for a specified calculator log type."""
     if request.method == 'POST':
-        log_id = request.POST.get('log_id')    
+        log_id = request.POST.get('log_id')
         model = apps.get_model('calculators', log_type)
         log = model.objects.filter(id=log_id, user=request.user).first()
-    
         if log:
             log.delete()
-    
-    if log_type == 'OneRepMaxLog':
-        return redirect('one_rep_max')
-    elif log_type == 'BMILog':
-        return redirect('bmi')
-    elif log_type == 'CalorieLog':
-        return redirect('calorie')
-    elif log_type == 'BodyFatLog':
-        return redirect('body_fat')
-    else:
-        return redirect('homepage') #[?] default
+
+    return redirect(log_type.lower().replace("log", ""))

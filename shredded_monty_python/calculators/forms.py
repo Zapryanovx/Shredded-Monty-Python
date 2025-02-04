@@ -2,15 +2,20 @@ from django import forms
 
 
 class OneRepMaxForm(forms.Form):
+    """
+    Form to calculate the One-Rep Max for a specific exercise.
+    Includes fields for weight lifted, number of repetitions and exercise type.
+    """
+    
     weight = forms.FloatField(
-        label="Weight (kg)", 
+        label="Weight (kg)",
         widget=forms.NumberInput(attrs={
             'class': 'form-control',
             'placeholder': 'Enter weight in kg'
         })
     )
     repetitions = forms.IntegerField(
-        label="Repetitions", 
+        label="Repetitions",
         widget=forms.NumberInput(attrs={
             'class': 'form-control',
             'placeholder': 'Enter number of repetitions'
@@ -28,6 +33,11 @@ class OneRepMaxForm(forms.Form):
 
 
 class BMIForm(forms.Form):
+    """
+    Form to calculate the Body Mass Index (BMI).
+    Includes fields for height in cm and weight in kg.
+    """
+    
     height = forms.FloatField(
         label="Height (cm)",
         widget=forms.NumberInput(attrs={
@@ -45,10 +55,16 @@ class BMIForm(forms.Form):
 
 
 class CalorieForm(forms.Form):
+    """
+    Form to calculate daily calorie needs based on activity level.
+    Includes fields for gender, age, height, weight and activity level.
+    """
+    
     GENDER_CHOICES = [
-        ('male', 'Male'), ('female', 'Female')
+        ('male', 'Male'),
+        ('female', 'Female')
     ]
-        
+
     ACTIVITY_LEVEL_CHOICES = [
         ('sedentary', 'Sedentary (little or no exercise)'),
         ('light', 'Light exercise (1-3 days per week)'),
@@ -58,48 +74,63 @@ class CalorieForm(forms.Form):
     ]
 
     gender = forms.ChoiceField(
-        choices=GENDER_CHOICES, 
+        choices=GENDER_CHOICES,
         widget=forms.Select(attrs={'class': 'form-control'})
     )
     age = forms.IntegerField(
         widget=forms.NumberInput(attrs={
-            'class': 'form-control', 
+            'class': 'form-control',
             'placeholder': 'Enter your age'
         })
     )
     height = forms.FloatField(
         widget=forms.NumberInput(attrs={
-            'class': 'form-control', 
+            'class': 'form-control',
             'placeholder': 'Enter height in cm'
         })
     )
     weight = forms.FloatField(
         widget=forms.NumberInput(attrs={
-            'class': 'form-control', 
+            'class': 'form-control',
             'placeholder': 'Enter weight in kg'
         })
     )
     activity_level = forms.ChoiceField(
-        choices=ACTIVITY_LEVEL_CHOICES, 
+        choices=ACTIVITY_LEVEL_CHOICES,
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
 
 class BodyFatForm(forms.Form):
-    GENDER_CHOICES = [
-        ('male', 'Male'), ('female', 'Female')
-    ]
+    """
+    Form to calculate body fat percentage.
+    Includes fields for gender, age, weight and height.
+    """
     
+    GENDER_CHOICES = [
+        ('male', 'Male'),
+        ('female', 'Female')
+    ]
+
     gender = forms.ChoiceField(
-        choices=GENDER_CHOICES, 
+        choices=GENDER_CHOICES,
         widget=forms.Select(attrs={'class': 'form-control'})
     )
     age = forms.IntegerField(
-        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter your age'})
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter your age'
+        })
     )
     weight = forms.FloatField(
-        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter weight in kg'})
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter weight in kg'
+        })
     )
     height = forms.FloatField(
-        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter height in cm'})
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter height in cm'
+        })
     )
