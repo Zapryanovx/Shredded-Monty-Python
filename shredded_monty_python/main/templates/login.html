@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
 
+<!-- Page Title -->
 {% block title %}Login - Shredded Monty Python{% endblock %}
 
+<!-- Additional Styles -->
 {% block extra_css %}
 <link href="{% static 'css/login.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
+
+<!-- Login section -->
 <div class="content">
     <section class="py-5">
         <div class="container">
@@ -36,4 +40,5 @@
         </div>
     </section>
 </div>
+
 {% endblock %}

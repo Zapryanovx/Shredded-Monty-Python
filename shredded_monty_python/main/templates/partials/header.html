@@ -1,40 +1,48 @@
 {% load static %}
 
+<!-- Navigation Bar (Header) -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
+        <!-- Logo -->
         <a class="navbar-brand" href="{% url 'homepage' %}">
             <img src="{% static 'media/logo_white.png' %}" alt="Logo"> Shredded Monty Python
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+
+        <!-- Menu Items -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+                <!-- Home Link -->
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'homepage' %}">Home</a>
                 </li>
+
+                <!-- Links for Logged-In Users -->
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="nav-link">Social</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="nav-link">Workouts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'calculators' %}">Calculators</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
-                </li>
-                {% include 'profile.html' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="nav-link">Social</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'workouts' %}">Workouts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'calculators' %}">Calculators</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+
+                    <!-- Include Profile Menu -->
+                    {% include 'profile.html' %}
+
+                <!-- Links for Guests --->
                 {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
-                </li>
-                {% endif %}   
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>

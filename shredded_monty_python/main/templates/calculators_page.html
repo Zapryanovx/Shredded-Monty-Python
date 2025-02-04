@@ -1,19 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
 
+<!-- Page Title -->
 {% block title %}Calculators - Shredded Monty Python{% endblock %}
 
+<!-- Additional Styles -->
 {% block extra_css %}
 <link href="{% static 'css/calculators.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 <div class="content">
+    <!-- Main content container -->
     <section class="py-5">
         <div class="container text-center">
             <h2 class="fade-in">Fitness Calculators</h2>
             <p class="lead fade-in">Explore our calculators to help you optimize your fitness journey.</p>
             <div class="row mt-5 d-flex justify-content-center">
+
+                <!-- Calculator Card: One-Rep Max Calculator -->
                 <div class="col-md-6 col-lg-4 mb-4 fade-in">
                     <a href="{% url 'one_rep_max' %}">
                         <div class="calculator-card">
@@ -22,6 +27,8 @@
                         </div>
                     </a>
                 </div>
+
+                <!-- Calculator Card: BMI Calculator -->
                 <div class="col-md-6 col-lg-4 mb-4 fade-in">
                     <a href="{% url 'bmi' %}">
                         <div class="calculator-card">
@@ -30,6 +37,8 @@
                         </div>
                     </a>
                 </div>
+
+                <!-- Calculator Card: Calorie Calculator -->
                 <div class="col-md-6 col-lg-4 mb-4 fade-in">
                     <a href="{% url 'calorie' %}">
                         <div class="calculator-card">
@@ -38,6 +47,8 @@
                         </div>
                     </a>
                 </div>
+
+                <!-- Calculator Card: Body Fat Calculator -->
                 <div class="col-md-6 col-lg-4 mb-4 fade-in">
                     <a href="{% url 'body_fat' %}">
                         <div class="calculator-card">
@@ -46,6 +57,7 @@
                         </div>
                     </a>
                 </div>
+
             </div>
         </div>
     </section>
