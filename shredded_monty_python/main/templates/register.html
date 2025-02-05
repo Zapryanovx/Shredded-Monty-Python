@@ -17,6 +17,13 @@
         <div class="container">
             <div class="registration-form">
                 <h2>Create Your Account</h2>
+                {% if messages %}
+                <div class="alert alert-danger">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
                 <form action="{% url 'register' %}" method="POST">
                     {% csrf_token %}
                     <div class="mb-3">
