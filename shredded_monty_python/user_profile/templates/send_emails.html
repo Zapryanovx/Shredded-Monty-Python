@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- User Search and Selection -->
+<div class="container mt-5">
+    <h1 class="text-center" style="margin-top: 100px;">Send Email</h1>
+    <form method="POST" action="{% url 'send_emails' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- User Search and Selection -->
+        <div class="mb-4">
+            <label for="search-users" class="form-label">Search and Select Recipient</label>
+            <input type="text" id="search-users" class="form-control" placeholder="Search by username...">
+            <select class="form-select mt-2" id="recipient" name="recipient" size="5">
+                <option value="all">All Users</option>
+                {% for user in users %}
+                    <option value="{{ user.email }}">{{ user.username }} ({{ user.email }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Subject -->
+        <div class="mb-4">
+            <label for="subject" class="form-label">Subject</label>
+            <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter the subject" required>
+        </div>
+
+        <!-- Message -->
+        <div class="mb-4">
+            <label for="message" class="form-label">Message</label>
+            <textarea class="form-control" id="message" name="message" rows="6" placeholder="Enter your message here" required></textarea>
+        </div>
+
+        <!-- Single Attachment -->
+        <div class="mb-4">
+            <label for="attachment" class="form-label">Attachment</label>
+            <input type="file" class="form-control" id="attachment" name="attachment">
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary" style="margin-bottom: 100px;">Send Email</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<!-- Search Engine -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("search-users");
+        const recipientSelect = document.getElementById("recipient");
+
+        searchInput.addEventListener("input", function () {
+            const filter = searchInput.value.toLowerCase();
+            const options = recipientSelect.options;
+
+            for (let i = 0; i < options.length; i++) {
+                const text = options[i].textContent.toLowerCase();
+                options[i].style.display = text.includes(filter) ? "" : "none";
+            }
+        });
+    });
+</script>
+
+{% endblock %}

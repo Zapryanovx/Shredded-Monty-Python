@@ -1,31 +1,102 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Settings{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/settings.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <div class="card">
-        <div class="card-header">
-            <h2>Settings</h2>
+<div class="settings-container mt-5">
+    <h1 class="text-center">User Settings</h1>
+
+    <!-- Profile Update Section -->
+    <form method="POST" enctype="multipart/form-data" class="mb-5">
+        {% csrf_token %}
+        <input type="hidden" name="save_profile" value="true">
+        <div class="profile-picture-container text-center mb-4">
+            <div class="profile-picture-wrapper">
+                {% if user.profile.profile_picture %}
+                    <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
+                {% else %}
+                    <img src="{% static 'media/default-profile.png' %}" alt="Default Profile Picture" class="profile-picture">
+                {% endif %}
+                <label for="id_profile_picture" class="profile-picture-edit">
+                    <i class="bi bi-pencil-fill"></i>
+                </label>
+                <input type="file" id="id_profile_picture" name="profile_picture" class="d-none">
+            </div>
         </div>
-        <div class="card-body">
-            <form method="POST">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label for="first_name" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="first_name" name="first_name" value="{{ request.user.first_name }}">
-                </div>
-                <div class="mb-3">
-                    <label for="last_name" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="last_name" name="last_name" value="{{ request.user.last_name }}">
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{ request.user.email }}">
-                </div>
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-            </form>
+        <div class="mb-4">
+            <label for="id_username" class="form-label">Username</label>
+            <input type="text" id="id_username" name="username" class="form-control" value="{{ settings_form.username.value }}" placeholder="Enter your username">
         </div>
-    </div>
+        <div class="mb-4">
+            <label for="id_email" class="form-label">Email</label>
+            <input type="email" id="id_email" name="email" class="form-control" value="{{ settings_form.email.value }}" placeholder="Enter your email">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Save Profile</button>
+    </form>
+
+    <!-- Password Change Section -->
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="change_password" value="true">
+        <h2 class="text-center mb-4">Change Password</h2>
+    
+        <!-- Current Password -->
+        <div class="mb-4">
+            <label for="id_current_password" class="form-label">Current Password</label>
+            {{ password_form.current_password }}
+            {% if password_form.current_password.errors %}
+                <div class="text-danger">{{ password_form.current_password.errors|join:', ' }}</div>
+            {% endif %}
+        </div>
+    
+        <!-- New Password -->
+        <div class="mb-4">
+            <label for="id_new_password" class="form-label">New Password</label>
+            {{ password_form.new_password }}
+            {% if password_form.new_password.errors %}
+                <div class="text-danger">{{ password_form.new_password.errors|join:', ' }}</div>
+            {% endif %}
+        </div>
+    
+        <!-- Confirm Password -->
+        <div class="mb-4">
+            <label for="id_confirm_password" class="form-label">Confirm New Password</label>
+            {{ password_form.confirm_password }}
+            {% if password_form.confirm_password.errors %}
+                <div class="text-danger">{{ password_form.confirm_password.errors|join:', ' }}</div>
+            {% endif %}
+        </div>
+    
+        <button type="submit" class="btn btn-primary w-100">Change Password</button>
+    </form>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const profilePictureInput = document.getElementById('id_profile_picture');
+        const profilePictureWrapper = document.querySelector('.profile-picture-wrapper');
+
+        profilePictureWrapper.addEventListener('mouseover', function () {
+            profilePictureWrapper.classList.add('hover');
+        });
+
+        profilePictureWrapper.addEventListener('mouseout', function () {
+            profilePictureWrapper.classList.remove('hover');
+        });
+
+        profilePictureInput.addEventListener('change', function () {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = profilePictureWrapper.querySelector('.profile-picture');
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(profilePictureInput.files[0]);
+        });
+    });
+</script>
 {% endblock %}
