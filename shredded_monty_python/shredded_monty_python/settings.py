@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'calculators',
     'user_profile',
     'workouts',
+    'notifications',
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'shreddedmontypython@gmail.com'
+EMAIL_HOST_PASSWORD = 'ibhg injb tvai utbf'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
