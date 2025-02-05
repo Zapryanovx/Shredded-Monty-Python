@@ -1,0 +1,46 @@
+.settings-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture-container {
+    position: relative;
+}
+
+.profile-picture-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+
+.profile-picture-edit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.profile-picture-edit:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.profile-picture-wrapper.hover .profile-picture-edit {
+    display: block;
+}
