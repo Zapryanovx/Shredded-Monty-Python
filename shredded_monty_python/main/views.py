@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from .forms import RegisterForm, LoginForm
+from .models import Profile
+from django.contrib import messages
 
 
 def homepage_view(request):
@@ -26,8 +28,15 @@ def register_view(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
+        
+            # Create a profile for the new user
+            Profile.objects.create(user=user)
+            
             login(request, user)
             return redirect('homepage')
+        else:
+            for field in form.errors:
+                messages.error(request, form.errors[field].as_text())
     else:
         form = RegisterForm()
     
@@ -37,13 +46,9 @@ def register_view(request):
 def login_view(request):
     """
     Handle user login.
-
-    If the request method is POST, validate the form and authenticate the user.
-    If authentication is successful, log in the user and redirect to the homepage.
-    If the request method is GET, display the login form.
-    
+    If the form is invalid or credentials are incorrect, show relevant errors to the user.
     """
-    if request.method == 'POST':    
+    if request.method == 'POST':
         form = LoginForm(data=request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
@@ -52,7 +57,12 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 return redirect('homepage')
+            else:
+                messages.error(request, "Invalid username or password.")
+        else:
+            for field in form.errors:
+                messages.error(request, form.errors[field].as_text())
     else:
         form = LoginForm()
-    
+
     return render(request, 'login.html', {'form': form})

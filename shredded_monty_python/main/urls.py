@@ -10,6 +10,7 @@ Routes:
 - 'register/': Maps to `register_view`.
 - 'login/': Maps to `login_view`.
 - 'contact/': Maps to `contact_view`.
+
 """
 
 urlpatterns = [
