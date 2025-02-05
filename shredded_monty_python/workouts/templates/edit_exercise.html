@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
 
+<!-- Page Title -->
+{% block title %}Edit Exercise{% endblock %}
+
+<!-- Additional Styles -->
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/forms_design.css' %}">
 {% endblock %}
 
 {% block content %}
+
+<!-- Form to edit an exercise -->
 <div class="form-container">
     <h2>Edit Exercise</h2>
     <form method="post" enctype="multipart/form-data">
@@ -40,4 +46,5 @@
         </div>
     </form>
 </div>
+
 {% endblock %}
