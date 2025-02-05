@@ -14,5 +14,5 @@ class Profile(models.Model):
         upload_to='profile_pictures/',
         blank=True,
         null=True,
-        default='profile_pictures/default_avatar.png'
+        default='profile_pictures/default_avatar.jpg'
     )
