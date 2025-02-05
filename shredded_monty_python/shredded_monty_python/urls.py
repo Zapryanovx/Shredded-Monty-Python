@@ -25,7 +25,6 @@ urlpatterns = [
     path('calculators/', include('calculators.urls')),
     path('profile/', include('user_profile.urls')),
     path('workouts/', include('workouts.urls')),
-    path('', include('notifications.urls'))
 ]
 
 if settings.DEBUG:
