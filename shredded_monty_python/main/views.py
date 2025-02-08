@@ -55,6 +55,9 @@ def login_view(request):
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
+                if not hasattr(user, 'profile'):
+                    Profile.objects.create(user=user)
+                    
                 login(request, user)
                 return redirect('homepage')
             else:
