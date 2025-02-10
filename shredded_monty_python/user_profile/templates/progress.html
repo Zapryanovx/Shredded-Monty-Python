@@ -1,18 +1,114 @@
-<!-- TO DO-->
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block title %}Progress{% endblock %}
+<!-- Page Title -->
+{% block title %}Progress Graphs{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <div class="card">
-        <div class="card-header">
-            <h2>Your Progress</h2>
-        </div>
-        <div class="card-body">
-            <p>Track your workouts and progress over time.</p>
-            <!-- Add a chart or table for progress tracking here -->
-        </div>
+
+<div class="graphs-container">
+    <h1>Activity Graphs</h1>
+    
+    <!-- Water Intake Graph Container -->
+    <div class="graph-section" style="margin-top: 30px;">
+        <div id="waterChartContainer" style="height: 300px; width: 100%;"></div>
+    </div>
+
+    <!-- Weight Graph Container -->
+    <div class="graph-section" style="margin-top: 30px;">
+        <div id="weightChartContainer" style="height: 300px; width: 100%;"></div>
+    </div>
+
+    <!-- Workout Count Graph Container -->
+    <div class="graph-section" style="margin-top: 30px;">
+        <div id="workoutChartContainer" style="height: 300px; width: 100%;"></div>
     </div>
 </div>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Data passed from views.py; each data point has an 'x' value as "YYYY-MM-DD" and a numeric 'y' value.
+    const waterDataRaw = {{ water_data|safe }};
+    const weightDataRaw = {{ weight_data|safe }};
+    const workoutDataRaw = {{ workout_data|safe }};
+
+    // Convert a date string to a JavaScript Date object.
+    const parseDate = function(dateStr) {
+        return new Date(dateStr);
+    };
+
+    const waterData = waterDataRaw.map(item => ({ x: parseDate(item.x), y: item.y }));
+    const weightData = weightDataRaw.map(item => ({ x: parseDate(item.x), y: item.y }));
+    const workoutData = workoutDataRaw.map(item => ({ x: parseDate(item.x), y: item.y }));
+    
+    // DEBUG
+    // console.log("Water Data:", waterData);
+    // console.log("Weight Data:", weightData);
+    // console.log("Workout Data:", workoutData);
+
+    // Create the Water Intake Chart
+    const waterChart = new CanvasJS.Chart("waterChartContainer", {
+        theme: "light2",
+        title: {
+            text: "Daily Water Intake (Last 30 Days)"
+        },
+        axisY: {
+            title: "Total Water Intake (ml)",
+            minimum: 0
+        },
+        axisX: {
+            title: "Date",
+            valueFormatString: "DD MMM"
+        },
+        data: [{
+            type: "line",
+            dataPoints: waterData
+        }]
+    });
+    waterChart.render();
+
+    // Create the Weight Chart
+    const weightChart = new CanvasJS.Chart("weightChartContainer", {
+        theme: "light2",
+        title: {
+            text: "Weight (Last 30 Days)"
+        },
+        axisY: {
+            title: "Weight (kg)",
+            minimum: 0
+        },
+        axisX: {
+            title: "Date",
+            valueFormatString: "DD MMM"
+        },
+        data: [{
+            type: "line",
+            dataPoints: weightData
+        }]
+    });
+    weightChart.render();
+
+    // Create the Workout Count Chart
+    const workoutChart = new CanvasJS.Chart("workoutChartContainer", {
+        theme: "light2",
+        title: {
+            text: "Monthly Workout Count (Last 12 Months)"
+        },
+        axisY: {
+            title: "Workouts",
+            minimum: 0
+        },
+        axisX: {
+            title: "Month",
+            valueFormatString: "MMM YYYY"
+        },
+        data: [{
+            type: "column",
+            dataPoints: workoutData
+        }]
+    });
+    workoutChart.render();
+});
+</script>
+
 {% endblock %}

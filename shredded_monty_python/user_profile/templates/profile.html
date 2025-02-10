@@ -7,8 +7,8 @@
     </a>
     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="profileDropdown">
         <li><a class="dropdown-item" href="#">View Profile</a></li>
-        <li><a class="dropdown-item" href="#">Progress</a></li>
-        <li><a class="dropdown-item" href="#">Calendar</a></li>
+        <li><a class="dropdown-item" href="{% url 'progress' %}">Progress</a></li>
+        <li><a class="dropdown-item" href="{% url 'calendar' %}">Calendar</a></li>
         <li><a class="dropdown-item" href="{% url 'settings' %}">Settings</a></li>
             
         <!-- Superuser-only option to send emails -->

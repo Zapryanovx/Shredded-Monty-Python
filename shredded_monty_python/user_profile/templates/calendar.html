@@ -1,18 +1,163 @@
-<!-- TO DO-->
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
 
+<!-- Page Title -->
 {% block title %}Calendar{% endblock %}
 
+<!-- Additional Styles -->
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container py-5">
-    <div class="card">
-        <div class="card-header">
-            <h2>Your Calendar</h2>
+
+<div class="calendar-container">
+    <h1>Calendar</h1>
+
+    <!-- Navigation for previous and next month -->
+    <div class="calendar-navigation text-center mb-3">
+        <a href="?year={{ year }}&month={{ month_number|add:'-1' }}" class="btn btn-dark">&laquo; Previous</a>
+        <span class="fw-bold fs-4">{{ month_name }} {{ year }}</span>
+        <a href="?year={{ year }}&month={{ month_number|add:'1' }}" class="btn btn-dark">Next &raquo;</a>
+    </div>
+
+    <!-- Calendar table -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for week in month_days %}
+            <tr>
+                {% for day in week %}
+                <td>
+                    {% if day > 0 %}
+                    <a href="?year={{ year }}&month={{ month_number }}&selected_date={{ year }}-{{ month_number|stringformat:"02d" }}-{{ day|stringformat:"02d" }}">
+                        {{ day }}
+                    </a>
+                    {% endif %}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if selected_date %}
+<h1 style="text-align: center;">Selected Date: {{ selected_date }}</h1>
+
+<div class="log-section">
+    <div class="log-forms">
+        <div class="form-group">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="selected_date" value="{{ selected_date }}">
+                <h5>Add Water Intake (ml)</h5>
+                {{ water_form.as_p }}
+                <button type="submit" name="add_water_log" class="btn btn-primary">Add Water Log</button>
+            </form>
         </div>
-        <div class="card-body">
-            <p>Here is your calendar for tracking events.</p>
-            <!-- Add the calendar for tracking here -->
+
+        <div class="form-group">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="selected_date" value="{{ selected_date }}">
+                <h5>Add Workout</h5>
+                {{ workout_form.as_p }}
+                <button type="submit" name="add_workout_log" class="btn btn-primary">Add Workout Log</button>
+            </form>
+        </div>
+
+        <div class="form-group">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="selected_date" value="{{ selected_date }}">
+                <h5>Add Weight (kg)</h5>
+                {{ weight_form.as_p }}
+                <button type="submit" name="add_weight_log" class="btn btn-primary">Add Weight Log</button>
+            </form>
         </div>
     </div>
+
+    <!-- Tables for displaying logs -->
+    <div class="log-tables">
+        <!-- Water logs table -->
+        <h5>Water Logs</h5>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Amount (ml)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in water_logs %}
+                <tr>
+                    <td>{{ log.time }}</td>
+                    <td>{{ log.amount }}</td>
+                    <td><a href="{% url 'delete_water_log' log.id %}" class="btn btn-danger">Remove</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Workout logs table -->
+        <h5>Workout Logs</h5>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Exercise</th>
+                    <th>Reps</th>
+                    <th>Sets</th>
+                    <th>Weight</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in workout_logs %}
+                <tr>
+                    <td>{{ log.exercise }}</td>
+                    <td>{{ log.reps }}</td>
+                    <td>{{ log.sets }}</td>
+                    <td>{{ log.weight }}</td>
+                    <td><a href="{% url 'delete_workout_log' log.id %}" class="btn btn-danger">Remove</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Weight logs table -->
+        <h5>Weight Logs</h5>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Weight (kg)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in weight_logs %}
+                <tr>
+                    <td>{{ log.time }}</td>
+                    <td>{{ log.weight }}</td>
+                    <td><a href="{% url 'delete_weight_log' log.id %}" class="btn btn-danger">Remove</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
+{% endif %}
+
 {% endblock %}
