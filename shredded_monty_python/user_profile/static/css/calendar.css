@@ -1,0 +1,184 @@
+.calendar-container {
+    margin-top: 50px;
+    padding: 20px;
+}
+
+.calendar-container h1 {
+    text-align: center;
+    margin: 20px;
+}
+
+.calendar-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    color: #000;
+}
+
+.calendar-container table th,
+.calendar-container table td {
+    width: 14.28%;
+    height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    padding: 0;
+}
+
+.calendar-container table td a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 100px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #000;
+    background-color: transparent;
+    border: none;
+}
+
+.calendar-container table td a:hover {
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+}
+
+.calendar-container table th {
+    font-weight: bold;
+    background-color: #f0f0f0;
+    color: #000;
+}
+
+.alert-info {
+    margin-top: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    padding: 15px;
+    text-align: center;
+}
+
+/* Log Section */
+.log-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+/* Log Forms */
+.log-forms {
+    flex: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-right: 15px;
+    max-width: 45%;
+}
+
+.log-forms .form-group {
+    margin-bottom: 20px;
+}
+
+.log-forms form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.log-forms form button {
+    width: 50%;
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Log Tables */
+.log-tables {
+    flex: 2;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 50%;
+}
+
+.log-tables h5 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: #333;
+    text-align: center;
+}
+
+.log-tables table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.log-tables table th,
+.log-tables table td {
+    padding: 10px 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.log-tables table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    color: #333;
+}
+
+.log-tables table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.log-tables .btn-danger {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.log-tables .btn-danger:hover {
+    background-color: #a71d2a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .calendar-container table th,
+    .calendar-container table td {
+        height: 80px;
+        font-size: 0.8rem;
+    }
+
+    .log-forms {
+        max-width: 100%;
+        margin-right: 0;
+    }
+
+    .log-tables {
+        max-width: 100%;
+        margin-top: 20px;
+    }
+
+    .log-forms h5,
+    .log-tables h5 {
+        font-size: 1rem;
+    }
+}
