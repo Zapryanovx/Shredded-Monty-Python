@@ -84,34 +84,64 @@
             <div class="p-3">
                 <h5>Comments</h5>
                 {% for comment in post.comments.all %}
-                    <div class="media mb-2">
-                        <div class="media-body">
-                            <strong>{{ comment.user.username }}</strong>
-                            <span class="text-muted">• {{ comment.created_at|timesince }} ago</span>
-                            <p>{{ comment.text }}</p>
-
-                            <!-- Reply Button -->
-                            <button class="btn btn-sm btn-link reply-btn" data-comment="{{ comment.id }}">
-                                Reply
-                            </button>
-
-                            <!-- Reply Form (Hidden by default) -->
-                            <form method="POST" action="{% url 'reply_comment' post.id comment.id %}" 
-                                  class="reply-form" id="reply-form-{{ comment.id }}" style="display: none;">
-                                {% csrf_token %}
-                                <textarea name="text" class="form-control" rows="2" placeholder="Write a reply..."></textarea>
-                                <button type="submit" class="btn btn-primary btn-sm mt-2">Reply</button>
-                            </form>
-
-                            <!-- Nested Replies (Indented) -->
-                            {% for reply in comment.replies.all %}
-                                <div class="indent-reply mt-2" style="margin-left: 2rem;">
-                                    <strong>{{ reply.user.username }}</strong>
-                                    <span class="text-muted">• {{ reply.created_at|timesince }} ago</span>
-                                    <p>{{ reply.text }}</p>
-                                </div>
-                            {% endfor %}
+                    <div class="mb-2">
+                        <!-- Header container with profile picture and username -->
+                        <div class="d-flex align-items-center">
+                            {% if comment.user.profile.profile_picture %}
+                                <img src="{{ comment.user.profile.profile_picture.url }}" 
+                                    alt="{{ comment.user.username }}" 
+                                    class="rounded-circle mr-2" 
+                                    style="width: 30px; height: 30px; object-fit: cover;">
+                            {% else %}
+                                <img src="{% static 'images/default_profile.png' %}" 
+                                    alt="{{ comment.user.username }}" 
+                                    class="rounded-circle mr-2" 
+                                    style="width: 30px; height: 30px; object-fit: cover;">
+                            {% endif %}
+                            <div>
+                                <strong>{{ comment.user.username }}</strong>
+                                <span class="text-muted">• {{ comment.created_at|timesince }} ago</span>
+                            </div>
                         </div>
+                        <!-- Comment text -->
+                        <p>{{ comment.text }}</p>
+
+                        <!-- Reply Button -->
+                        <button class="btn btn-sm btn-link reply-btn" data-comment="{{ comment.id }}">
+                            Reply
+                        </button>
+
+                        <!-- Reply Form (Hidden by default) -->
+                        <form method="POST" action="{% url 'reply_comment' post.id comment.id %}"
+                            class="reply-form" id="reply-form-{{ comment.id }}" style="display: none;">
+                            {% csrf_token %}
+                            <textarea name="text" class="form-control" rows="2" placeholder="Write a reply..."></textarea>
+                            <button type="submit" class="btn btn-primary btn-sm mt-2">Reply</button>
+                        </form>
+
+                        <!-- Nested Replies (Indented) -->
+                        {% for reply in comment.replies.all %}
+                            <div class="indent-reply mt-2" style="margin-left: 2rem;">
+                                <div class="d-flex align-items-center">
+                                    {% if reply.user.profile.profile_picture %}
+                                        <img src="{{ reply.user.profile.profile_picture.url }}" 
+                                            alt="{{ reply.user.username }}" 
+                                            class="rounded-circle mr-2" 
+                                            style="width: 30px; height: 30px; object-fit: cover;">
+                                    {% else %}
+                                        <img src="{% static 'images/default_profile.png' %}" 
+                                            alt="{{ reply.user.username }}" 
+                                            class="rounded-circle mr-2" 
+                                            style="width: 30px; height: 30px; object-fit: cover;">
+                                    {% endif %}
+                                    <div>
+                                        <strong>{{ reply.user.username }}</strong>
+                                        <span class="text-muted">• {{ reply.created_at|timesince }} ago</span>
+                                    </div>
+                                </div>
+                                <p>{{ reply.text }}</p>
+                            </div>
+                        {% endfor %}
                     </div>
                 {% empty %}
                     <p class="text-muted">No comments yet.</p>
@@ -124,6 +154,7 @@
                     <button type="submit" class="btn btn-primary btn-sm mt-2">Comment</button>
                 </form>
             </div>
+
         </div>
     {% endfor %}
 </div>
