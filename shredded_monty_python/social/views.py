@@ -33,6 +33,23 @@ def create_post(request):
 
 
 @login_required
+def delete_post(request, post_id):
+    """
+    Allows a user to delete their own post or an admin to delete any post.
+    """
+    if request.user.is_superuser:
+        post = get_object_or_404(Post, id=post_id)
+    else:
+        post = get_object_or_404(Post, id=post_id, user=request.user)
+    
+    if request.method == 'POST':
+        post.delete()
+        return redirect('social_feed')
+    
+    return render(request, 'confirm_delete.html', {'object': post})
+
+
+@login_required
 def add_comment(request, post_id, parent_id=None):
     """
     Add a comment (or reply) to a post.
@@ -48,6 +65,23 @@ def add_comment(request, post_id, parent_id=None):
                 text=form.cleaned_data['text']
             )
     return redirect('social_feed')
+
+
+@login_required
+def delete_comment(request, comment_id):
+    """
+    Allows a user to delete their own comment (or reply) or an admin to delete any comment.
+    """
+    if request.user.is_superuser:
+        comment = get_object_or_404(Comment, id=comment_id)
+    else:
+        comment = get_object_or_404(Comment, id=comment_id, user=request.user)
+    
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('social_feed')
+    
+    return render(request, 'confirm_delete.html', {'object': comment})
 
 
 @login_required
