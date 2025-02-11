@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'calculators',
     'user_profile',
     'workouts',
+    'social',
 ]
 
 MIDDLEWARE = [
