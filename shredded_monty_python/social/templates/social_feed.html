@@ -91,12 +91,12 @@
                                 <img src="{{ comment.user.profile.profile_picture.url }}" 
                                     alt="{{ comment.user.username }}" 
                                     class="rounded-circle mr-2" 
-                                    style="width: 30px; height: 30px; object-fit: cover;">
+                                    style="width: 30px; height: 30px; object-fit: cover; margin-right: 10px;">
                             {% else %}
                                 <img src="{% static 'images/default_profile.png' %}" 
                                     alt="{{ comment.user.username }}" 
                                     class="rounded-circle mr-2" 
-                                    style="width: 30px; height: 30px; object-fit: cover;">
+                                    style="width: 30px; height: 30px; object-fit: cover; margin-right: 10px;">
                             {% endif %}
                             <div>
                                 <strong>{{ comment.user.username }}</strong>
@@ -127,12 +127,12 @@
                                         <img src="{{ reply.user.profile.profile_picture.url }}" 
                                             alt="{{ reply.user.username }}" 
                                             class="rounded-circle mr-2" 
-                                            style="width: 30px; height: 30px; object-fit: cover;">
+                                            style="width: 30px; height: 30px; object-fit: cover; margin-right: 10px;">
                                     {% else %}
                                         <img src="{% static 'images/default_profile.png' %}" 
                                             alt="{{ reply.user.username }}" 
                                             class="rounded-circle mr-2" 
-                                            style="width: 30px; height: 30px; object-fit: cover;">
+                                            style="width: 30px; height: 30px; object-fit: cover; margin-right: 10px;">
                                     {% endif %}
                                     <div>
                                         <strong>{{ reply.user.username }}</strong>
