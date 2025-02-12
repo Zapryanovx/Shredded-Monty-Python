@@ -309,3 +309,24 @@ def progress_view(request):
         "weight_data": json.dumps(weight_data, indent=4),
         "workout_data": json.dumps(workout_data, indent=4),
     })
+
+
+@login_required
+def view_profile(request):
+    """
+    Display a page with four sections:
+      - Profile Data
+      - Liked Posts: Posts the current user has liked.
+      - Saved Posts: Posts the current user has saved.
+      - Authored Posts: Posts created by the current user.
+    """
+    
+    liked_posts = Post.objects.filter(likes__user=request.user).order_by('-created_at').distinct()
+    saved_posts = Post.objects.filter(saves__user=request.user).order_by('-created_at').distinct()
+    authored_posts = Post.objects.filter(user=request.user).order_by('-created_at')
+
+    return render(request, 'view_profile.html', {
+        'liked_posts': liked_posts,
+        'saved_posts': saved_posts,
+        'authored_posts': authored_posts,
+    })
