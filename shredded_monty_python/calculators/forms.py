@@ -32,12 +32,14 @@ class OneRepMaxForm(forms.Form):
     )
     
     def clean_weight(self):
+        """Handle weight validation.""" 
         weight = self.cleaned_data.get('weight')
         if weight <= 0:
             raise forms.ValidationError("Weight must be a positive number.")
         return weight
 
     def clean_repetitions(self):
+        """Handle repetitions validation."""
         repetitions = self.cleaned_data.get('repetitions')
         if repetitions <= 0:
             raise forms.ValidationError("Repetitions must be a positive number.")
@@ -66,12 +68,14 @@ class BMIForm(forms.Form):
     )
     
     def clean_height(self):
+        """Handle height validation."""
         height = self.cleaned_data.get('height')
         if height <= 0:
             raise forms.ValidationError("Height must be a positive number.")
         return height
 
     def clean_weight(self):
+        """Handle weight validation."""
         weight = self.cleaned_data.get('weight')
         if weight <= 0:
             raise forms.ValidationError("Weight must be a positive number.")
@@ -125,18 +129,21 @@ class CalorieForm(forms.Form):
     )
     
     def clean_age(self):
+        """Handle age validation.""" 
         age = self.cleaned_data.get('age')
         if age <= 0:
             raise forms.ValidationError("Age must be a positive number.")
         return age
     
     def clean_height(self):
+        """Handle height validation."""
         height = self.cleaned_data.get('height')
         if height <= 0:
             raise forms.ValidationError("Height must be a positive number.")
         return height
 
     def clean_weight(self):
+        """Handle weight validation.""" 
         weight = self.cleaned_data.get('weight')
         if weight <= 0:
             raise forms.ValidationError("Weight must be a positive number.")
@@ -178,18 +185,21 @@ class BodyFatForm(forms.Form):
     )
 
     def clean_age(self):
+        """Handle age validation.""" 
         age = self.cleaned_data.get('age')
         if age <= 0:
             raise forms.ValidationError("Age must be a positive number.")
         return age
     
     def clean_height(self):
+        """Handle height validation.""" 
         height = self.cleaned_data.get('height')
         if height <= 0:
             raise forms.ValidationError("Height must be a positive number.")
         return height
 
     def clean_weight(self):
+        """Handle weight validation."""  
         weight = self.cleaned_data.get('weight')
         if weight <= 0:
             raise forms.ValidationError("Weight must be a positive number.")
