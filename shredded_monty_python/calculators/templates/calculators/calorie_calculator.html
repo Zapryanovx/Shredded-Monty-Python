@@ -24,26 +24,46 @@
                 <div class="col-md-6 fade-in">
                     <form method="post">
                         {% csrf_token %}
+
+                        <!-- Display form errors globally -->
+                        {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <strong>Please fix the following errors:</strong>
+                            <ul>
+                                {% for field, errors in form.errors.items %}
+                                    {% for error in errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+
                         <div class="mb-3">
                             {{ form.gender.label_tag }}
                             {{ form.gender }}
                         </div>
+
                         <div class="mb-3">
                             {{ form.age.label_tag }}
                             {{ form.age }}
                         </div>
+
                         <div class="mb-3">
                             {{ form.height.label_tag }}
                             {{ form.height }}
                         </div>
+
                         <div class="mb-3">
                             {{ form.weight.label_tag }}
                             {{ form.weight }}
                         </div>
+
                         <div class="mb-3">
                             {{ form.activity_level.label_tag }}
                             {{ form.activity_level }}
                         </div>
+
                         <button type="submit" name="calculate" class="btn btn-primary">Calculate</button>
                         {% if result %}
                         <button type="submit" name="add_log" class="btn btn-success">Add Log</button>
