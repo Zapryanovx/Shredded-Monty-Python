@@ -26,13 +26,19 @@ class BMIFormTest(TestCase):
 
     def test_valid_form(self):
         """Checks if a valid BMI form is accepted."""
-        form_data = {'height': 180, 'weight': 75}
+        form_data = {
+            'height': 180, 
+            'weight': 75
+        }
         form = BMIForm(data=form_data)
         self.assertTrue(form.is_valid())
 
     def test_invalid_form(self):
         """Checks if a BMI form with zero height is rejected."""
-        form_data = {'height': 0, 'weight': 75}
+        form_data = {
+            'height': 0,
+            'weight': 75
+        }
         form = BMIForm(data=form_data)
         self.assertFalse(form.is_valid())
 
@@ -56,7 +62,7 @@ class CalorieFormTest(TestCase):
         """Checks if an invalid Calorie form (negative age) is rejected."""
         form_data = {
             'gender': 'female',
-            'age': -5,
+            'age': -5,  # invalid age
             'height': 165,
             'weight': 60,
             'activity_level': 'light'
@@ -123,40 +129,141 @@ class ModelsTest(TestCase):
 
 
 class ViewsTest(TestCase):
-    """Tests for views (fitness calculator pages and calculations)."""
+    """Tests for all calculator views including edge cases and form validation."""
 
     def setUp(self):
+        """Set up test client and a test user."""
         self.client = Client()
         self.user = User.objects.create_user(username='testuser', password='testpassword')
         self.client.login(username='testuser', password='testpassword')
 
     def test_calculators_page(self):
-        """Checks if the calculators page loads correctly."""
+        """Test if the main calculators page loads."""
         response = self.client.get(reverse('calculators'))
         self.assertEqual(response.status_code, 200)
 
-    def test_one_rep_max_view(self):
-        """Checks if the One-Rep Max calculator page loads correctly."""
+    # One-Rep Max View Tests
+    def test_one_rep_max_view_get(self):
+        """Test if One-Rep Max page loads on GET request."""
         response = self.client.get(reverse('onerepmax'))
         self.assertEqual(response.status_code, 200)
 
-    def test_bmi_view(self):
-        """Checks if the BMI calculator page loads correctly."""
+    def test_one_rep_max_valid_post(self):
+        """Test valid One-Rep Max form submission."""
+        response = self.client.post(reverse('onerepmax'), {
+            'weight': 100,
+            'repetitions': 5,
+            'exercise': 'bench_press',
+            'calculate': 'true'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Your One-Rep Max is")
+
+    def test_one_rep_max_invalid_post(self):
+        """Test invalid One-Rep Max form submission."""
+        response = self.client.post(reverse('onerepmax'), {
+            'weight': -10,  # invalid weight
+            'repetitions': 5,
+            'exercise': 'bench_press'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Weight must be a positive number.")
+
+    def test_one_rep_max_add_log(self):
+        """Test adding a log for One-Rep Max."""
+        response = self.client.post(reverse('onerepmax'), {
+            'weight': 100,
+            'repetitions': 5,
+            'exercise': 'bench_press',
+            'add_log': 'true'
+        })
+        self.assertEqual(response.status_code, 302)  # should redirect
+        self.assertTrue(OneRepMaxLog.objects.filter(user=self.user).exists())
+
+    # BMI View Tests
+    def test_bmi_view_get(self):
+        """Test if BMI page loads on GET request."""
         response = self.client.get(reverse('bmi'))
         self.assertEqual(response.status_code, 200)
 
-    def test_calorie_view(self):
-        """Checks if the Calorie calculator page loads correctly."""
+    def test_bmi_valid_post(self):
+        """Test valid BMI form submission."""
+        response = self.client.post(reverse('bmi'), {
+            'height': 180,
+            'weight': 75
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Your BMI is")
+
+    def test_bmi_invalid_post(self):
+        """Test invalid BMI form submission."""
+        response = self.client.post(reverse('bmi'), {
+            'height': 0,  # invalid height
+            'weight': 75
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Height must be a positive number.")
+
+    # Calorie Calculator View Tests
+    def test_calorie_view_get(self):
+        """Test if Calorie calculator page loads."""
         response = self.client.get(reverse('calorie'))
         self.assertEqual(response.status_code, 200)
 
-    def test_body_fat_view(self):
-        """Checks if the Body Fat calculator page loads correctly."""
+    def test_calorie_valid_post(self):
+        """Test valid Calorie form submission."""
+        response = self.client.post(reverse('calorie'), {
+            'gender': 'male',
+            'age': 25,
+            'height': 175,
+            'weight': 70,
+            'activity_level': 'moderate'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Your daily calorie need is")
+
+    def test_calorie_invalid_post(self):
+        """Test invalid Calorie form submission."""
+        response = self.client.post(reverse('calorie'), {
+            'gender': 'male',
+            'age': -5,  # invalid age
+            'height': 175,
+            'weight': 70,
+            'activity_level': 'moderate'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Age must be a positive number.")
+
+    # Body Fat View Tests
+    def test_body_fat_view_get(self):
+        """Test if Body Fat calculator page loads."""
         response = self.client.get(reverse('bodyfat'))
         self.assertEqual(response.status_code, 200)
 
+    def test_body_fat_valid_post(self):
+        """Test valid Body Fat form submission."""
+        response = self.client.post(reverse('bodyfat'), {
+            'gender': 'male',
+            'age': 30,
+            'height': 180,
+            'weight': 85
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Your Body Fat Percentage is")
+
+    def test_body_fat_invalid_post(self):
+        """Test invalid Body Fat form submission."""
+        response = self.client.post(reverse('bodyfat'), {
+            'gender': 'male',
+            'age': 30,
+            'height': -180,  # invalid height
+            'weight': 85
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Height must be a positive number.")
+
     def test_remove_log(self):
-        """Checks if the remove log functionality works."""
+        """Test if a user can remove a log entry."""
         log = OneRepMaxLog.objects.create(user=self.user, exercise='bench_press', result=100)
         response = self.client.post(reverse('remove_log', args=['OneRepMaxLog']), {'log_id': log.id})
         self.assertEqual(response.status_code, 302)  # should redirect
