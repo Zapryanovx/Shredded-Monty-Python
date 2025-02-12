@@ -34,7 +34,7 @@ def one_rep_max_view(request):
                     result=result,
                     date=now()
                 )
-                return redirect('one_rep_max')
+                return redirect('onerepmax')
     else:
         form = OneRepMaxForm()
 
@@ -172,7 +172,7 @@ def body_fat_view(request):
                     body_fat_percentage=result,
                     date=now()
                 )
-                return redirect('body_fat')
+                return redirect('bodyfat')
     else:
         form = BodyFatForm()
 

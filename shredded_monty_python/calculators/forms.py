@@ -30,6 +30,18 @@ class OneRepMaxForm(forms.Form):
         label="Exercise",
         widget=forms.Select(attrs={'class': 'form-control'})
     )
+    
+    def clean_weight(self):
+        weight = self.cleaned_data.get('weight')
+        if weight <= 0:
+            raise forms.ValidationError("Weight must be a positive number.")
+        return weight
+
+    def clean_repetitions(self):
+        repetitions = self.cleaned_data.get('repetitions')
+        if repetitions <= 0:
+            raise forms.ValidationError("Repetitions must be a positive number.")
+        return repetitions
 
 
 class BMIForm(forms.Form):
@@ -52,6 +64,18 @@ class BMIForm(forms.Form):
             'placeholder': 'Enter your weight in kg'
         })
     )
+    
+    def clean_height(self):
+        height = self.cleaned_data.get('height')
+        if height <= 0:
+            raise forms.ValidationError("Height must be a positive number.")
+        return height
+
+    def clean_weight(self):
+        weight = self.cleaned_data.get('weight')
+        if weight <= 0:
+            raise forms.ValidationError("Weight must be a positive number.")
+        return weight
 
 
 class CalorieForm(forms.Form):
@@ -99,6 +123,24 @@ class CalorieForm(forms.Form):
         choices=ACTIVITY_LEVEL_CHOICES,
         widget=forms.Select(attrs={'class': 'form-control'})
     )
+    
+    def clean_age(self):
+        age = self.cleaned_data.get('age')
+        if age <= 0:
+            raise forms.ValidationError("Age must be a positive number.")
+        return age
+    
+    def clean_height(self):
+        height = self.cleaned_data.get('height')
+        if height <= 0:
+            raise forms.ValidationError("Height must be a positive number.")
+        return height
+
+    def clean_weight(self):
+        weight = self.cleaned_data.get('weight')
+        if weight <= 0:
+            raise forms.ValidationError("Weight must be a positive number.")
+        return weight
 
 
 class BodyFatForm(forms.Form):
@@ -134,3 +176,21 @@ class BodyFatForm(forms.Form):
             'placeholder': 'Enter height in cm'
         })
     )
+
+    def clean_age(self):
+        age = self.cleaned_data.get('age')
+        if age <= 0:
+            raise forms.ValidationError("Age must be a positive number.")
+        return age
+    
+    def clean_height(self):
+        height = self.cleaned_data.get('height')
+        if height <= 0:
+            raise forms.ValidationError("Height must be a positive number.")
+        return height
+
+    def clean_weight(self):
+        weight = self.cleaned_data.get('weight')
+        if weight <= 0:
+            raise forms.ValidationError("Weight must be a positive number.")
+        return weight
